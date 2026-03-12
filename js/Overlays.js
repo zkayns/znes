@@ -1,0 +1,86 @@
+function drawOverlays() {
+  if (settings.audioOverlay) { // audio overlay
+    ctx.save();
+    let p1vol=nes.apu.p1Volume*2;
+    let p2vol=nes.apu.p2Volume*2;
+    let noisevol=nes.apu.noiseVolume*2;
+    ctx.transform(settings.audioOverlaySize, 0, 0, settings.audioOverlaySize, 0, settings.controlOverlay*28);
+    ctx.font="italic 12px monospace";
+    switch (settings.audioOverlayMode) {
+      case 0:      
+        ctx.fillStyle="#000000";
+        ctx.fillRect(0, 0, 24, p1vol+16);
+        ctx.fillStyle="#ff0000";
+        ctx.fillRect(0, 0, 24, p1vol);
+        ctx.fillText(nes.apu.p1Output, 12-ctx.measureText(nes.apu.p1Output).width/2, p1vol+12);
+        ctx.fillRect(0, p1vol+16, 24, 1);
+        ctx.fillStyle="#000000";
+        ctx.fillRect(24, 0, 24, p2vol+16);
+        ctx.fillStyle="#00ff00";
+        ctx.fillRect(24, 0, 24, p2vol);
+        ctx.fillText(nes.apu.p2Output, 36-ctx.measureText(nes.apu.p2Output).width/2, p2vol+12);
+        ctx.fillRect(24, p2vol+16, 24, 1);
+        ctx.fillStyle="#000000";
+        ctx.fillRect(48, 0, 24, noisevol+16);
+        ctx.fillStyle="#0000ff";
+        ctx.fillRect(48, 0, 24, noisevol);
+        ctx.fillRect(48, noisevol+16, 24, 1);
+        ctx.fillText(nes.apu.noiseOutput, 60-ctx.measureText(nes.apu.noiseOutput).width/2, noisevol+12);
+        break;
+      case 1:
+        ctx.fillStyle="#000000";
+        ctx.fillRect(0, 0, p1vol+32, 24);
+        ctx.fillStyle="#ff0000";
+        ctx.fillRect(0, 0, p1vol, 24);
+        ctx.fillText(nes.apu.p1Output, p1vol+8-ctx.measureText(nes.apu.p1Output).width/2, 16);
+        ctx.fillRect(p1vol+32, 0, 1, 24);
+        ctx.fillStyle="#000000";
+        ctx.fillRect(0, 24, p2vol+32, 24);
+        ctx.fillStyle="#00ff00";
+        ctx.fillRect(0, 24, p2vol, 24);
+        ctx.fillText(nes.apu.p2Output, p2vol+8-ctx.measureText(nes.apu.p2Output).width/2, 40);
+        ctx.fillRect(p2vol+32, 24, 1, 24);
+        ctx.fillStyle="#000000";
+        ctx.fillRect(0, 48, noisevol+32, 24);
+        ctx.fillStyle="#0000ff";
+        ctx.fillRect(0, 48, noisevol, 24);
+        ctx.fillText(nes.apu.noiseOutput, noisevol+8-ctx.measureText(nes.apu.noiseOutput).width/2, 64);
+        ctx.fillRect(noisevol+32, 48, 1, 24);
+        break;
+    };
+    ctx.restore();
+  };
+  if (settings.controlOverlay) { // control overlay
+    ctx.save();
+    ctx.fillStyle="#000000";
+    ctx.fillRect(0, 0, c.width, 28);
+    let curX=0;
+    let f=(t, c, y=1)=>{
+      ctx.fillStyle=c?"#ff0000":"#ffffff";
+      ctx.fillText(t, curX, 12*y);
+      curX+=ctx.measureText(t).width;
+    };
+    ctx.font="italic 12px monospace";
+    f("A ", (nes.currentControl1State%2));
+    f("B ", ((nes.currentControl1State>>1)%2));
+    f("SEL ", ((nes.currentControl1State>>2)%2));
+    f("STA ", ((nes.currentControl1State>>3)%2));
+    f("\u2191 ", ((nes.currentControl1State>>4)%2));
+    f("\u2193 ", ((nes.currentControl1State>>5)%2));
+    f("\u2190 ", ((nes.currentControl1State>>6)%2));
+    f("\u2192 ", ((nes.currentControl1State>>7)%2));
+    curX=0;
+    f("A ", (nes.currentControl2State%2), 2);
+    f("B ", ((nes.currentControl2State>>1)%2), 2);
+    f("SEL ", ((nes.currentControl2State>>2)%2), 2);
+    f("STA ", ((nes.currentControl2State>>3)%2), 2);
+    f("\u2191 ", ((nes.currentControl2State>>4)%2), 2);
+    f("\u2193 ", ((nes.currentControl2State>>5)%2), 2);
+    f("\u2190 ", ((nes.currentControl2State>>6)%2), 2);
+    f("\u2192 ", ((nes.currentControl2State>>7)%2), 2);
+    ctx.fillStyle="#ffffff";
+    ctx.fillText("1", c.width-ctx.measureText("1").width, 12);
+    ctx.fillText("2", c.width-ctx.measureText("2").width, 24);
+    ctx.restore();
+  };
+};
