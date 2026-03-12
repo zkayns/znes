@@ -1,6 +1,6 @@
-let ramManagerKey="=";
-let ramManagerInterval;
-let ramManagerLast;
+let mainManagerKey="=";
+let mainManagerInterval;
+let mainManagerLast;
 let ramLocks={};
 let settings={
   invert: 0,
@@ -14,9 +14,9 @@ if (localStorage.getItem("ramLocks")) ramLocks=JSON.parse(localStorage.getItem("
 if (localStorage.getItem("settings")) Object.assign(settings, JSON.parse(localStorage.getItem("settings")));
 addEventListener("keydown", (e)=>{
   if (el("popupShade")) return;
-  if (e.key==ramManagerKey) {
+  if (e.key==mainManagerKey) {
     if (el("manager")) destroyCurrentManager();
-    else openRamManager();
+    else openMainManager();
   };
   if (document.activeElement.classList.contains("ramLockInput")&&e.key=="Enter") ramLocks[document.activeElement.getAttribute("l")]=parseInt(document.activeElement.value);
   if (document.activeElement.id=="newLockContent"&&e.key=="Enter") {
@@ -111,12 +111,12 @@ function flip(w) {
 function palEdit(pal, w) {
   nes.ppu.writePalette(w, parseInt(prompt("Color IDX", nes.ppu.readPalette(w))));
 };
-function destroyRamManager() {
+function destroyMainManager() {
   destroyManagerCommon();
-  clearInterval(ramManagerInterval);
+  clearInterval(mainManagerInterval);
 };
-function openRamManager() {
-  destroyCurrentManager=destroyRamManager;
+function openMainManager() {
+  destroyCurrentManager=destroyMainManager;
   curManager="MAIN";
   let manager=document.createElement("div");
   manager.id="manager";
@@ -136,12 +136,12 @@ function openRamManager() {
     `<select onchange='settings.audioOverlayMode=parseFloat(this.value);' id='audioOverlayMode'><option value="0"${(settings.audioOverlayMode==0)?" selected":""}>Vertical</option><option value="1"${(settings.audioOverlayMode==1)?" selected":""}>Horizontal</option></select><label for='audioOverlayMode'>Audio Overlay Mode</label><br>`+
     `<input tooltip='<span>Enables the Control Overlay.</span>' onchange='flip("controlOverlay");' type='checkbox' id='controlOverlay'${settings.controlOverlay?" checked":""}><label for='controlOverlay'>Control Overlay</label>`+
     managerCommonString;
-  ramManagerLast=Date.now();
+  mainManagerLast=Date.now();
   managerTimers["rePalette"]=0;
-  ramManagerInterval=setInterval(()=>{
+  mainManagerInterval=setInterval(()=>{
     if (!nes) return;
     if (curManager!="MAIN") return;
-    let d=Date.now()-ramManagerLast;
+    let d=Date.now()-mainManagerLast;
     for (let i in managerTimers) managerTimers[i]+=d;
     let e=el("managerResult");
     el("curPal").innerHTML=(()=>{
@@ -185,12 +185,12 @@ function openRamManager() {
     };
     localStorage.setItem("ramLocks", JSON.stringify(ramLocks));
     localStorage.setItem("settings", JSON.stringify(settings));
-    ramManagerLast=Date.now();
+    mainManagerLast=Date.now();
   }, 16);
   document.body.appendChild(manager);
   el("setRam").addEventListener("keydown", (e)=>{
     if (e.key=="Enter") nes.ram[parseInt(el("getRam").value, 16)]=el("setRam").value;
   });
   addManagerDragLogic();
-  el("closeManager").addEventListener("mousedown", destroyRamManager);
+  el("closeManager").addEventListener("mousedown", destroyMainManager);
 };
