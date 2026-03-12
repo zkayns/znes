@@ -1,0 +1,172 @@
+body {
+  text-align: center;
+  background-color: #101020;
+  margin-left: calc((100vw - 1024px) / 2);
+  color: white;
+  font-family: monospace;
+}
+pre {
+  margin: 0;
+  padding: 0;
+}
+#log {
+  font-family: monospace;
+  max-height: 200px;
+  min-height: 200px;
+  overflow: scroll;
+  text-align: left;
+  width: 512px;
+  margin: auto;
+  border: 1px solid #afafaf;
+  padding: 5px;
+}
+#dtextoutput {
+  font-size: 12px;
+}
+#output {
+  width: 512px;
+  height: 480px;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+#wrapper {
+  display: grid;
+  grid-template-columns: 512px 512px;
+  grid-template-rows: 512px 1fr;
+  column-gap: 5px;
+  width: 1024px;
+  margin: 0;
+}
+#tl {
+  grid-column: 1;
+  grid-row: 1;
+}
+#tr {
+  grid-column: 2;
+  grid-row: 1;
+}
+#bl {
+  grid-column: 1;
+  grid-row: 2;
+}
+#br {
+  grid-column: 2;
+  grid-row: 2;
+}
+#doutput {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+.state {
+  margin: 0;
+  font-family: monospace;
+}
+#bpaddress {
+  width: 80px;
+}
+#breakpoints {
+  overflow: scroll;
+  max-height: 150px;
+}
+button, ::file-selector-button {
+  background-color: #404070;
+  font-family: monospace;
+  border: 0px;
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+  font-style: italic;
+  border-radius: 8px;
+}
+button:hover, ::file-selector-button:hover {
+  background-color: #606090;
+}
+.currentView {
+  font-weight: bold;
+}
+#manager {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 560px;
+  height: 504px;
+  color: #fff;
+  background-color: #000000e0;
+  font-family: monospace;
+  border-radius: 8px;
+  overflow: scroll;
+  user-select: none;
+}
+.managerTable {
+  width: 256px;
+  margin: auto;
+}
+.managerTable td {
+  display: inline-block;
+  border: 1px solid white;
+  width: 120px;
+}
+#closeManager {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  cursor: pointer;
+}
+.smallInput {
+  width: 64px;
+}
+.palColor {
+  display: inline-block; 
+  width: 12px; 
+  height: 12px;
+  cursor: pointer;
+}
+.palColor:hover {
+  filter: brightness(2);
+}
+#colorPreview {
+  width: 32px; 
+  height: 32px; 
+  margin: auto;
+  line-height: 32px;
+}
+.colOpt {
+  margin: 4px 4px 4px 4px;
+  line-height: 0px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.colOpt p {
+  color: #000;
+}
+#colorPreview p, .colOpt p {
+  color: #000;
+  mix-blend-mode: difference;
+  filter: invert(1);
+  user-select: none;
+}
+.colOpt, #colorPreview {
+  border-radius: 4px;
+}
+#colorOptions {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.invert {
+  filter: invert(1);
+}
+.noSharp {
+  image-rendering: unset !important;
+}
+#manager label {
+  margin-left: 0px;
+}
+#manager label::before {
+  content: " ";
+}
+#manager, #tooltip, .popup {
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 10px #000;
+}
