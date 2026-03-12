@@ -1,7 +1,6 @@
 # znes
 
-AccuracyCoin comparison with the original as of Mar 12, 2026:
-
+AccuracyCoin comparison with the original as of Mar 12, 2026:\
 <img width="256" height="240" alt="image (2)" src="https://github.com/user-attachments/assets/01fe8011-eeb6-424f-9f80-8f281dbbe68a" />
 <img width="256" height="240" alt="image (3)" src="https://github.com/user-attachments/assets/e12f365b-35d8-410d-9687-fc0e70b99e6f" />
 
